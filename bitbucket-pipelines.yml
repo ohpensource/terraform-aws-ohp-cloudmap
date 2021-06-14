@@ -1,18 +1,17 @@
-
-
 definitions:
   steps:
     - step: &shellcheck
         name: check scripts
         image: koalaman/shellcheck-alpine:stable
-        script: 
+        script:
           - |
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources
     - step: &tfm_init
         name: init - lint - validate
         image: hashicorp/terraform:latest
-        script: 
+        script:
+          - set -o pipefail
           - |
             chmod +x ./scripts/*.sh
             source ./scripts/tfm_init.sh
@@ -25,7 +24,7 @@ definitions:
             secret-key: $ECR_AWS_SECRET_KEY_XOPS_PULL
         script:
           - set -o pipefail
-          - | 
+          - |
             # Create / update terraform docs
             chmod +x ./scripts/tfm_docs.sh
             source ./scripts/tfm_docs.sh
@@ -36,11 +35,10 @@ definitions:
 pipelines:
   branches:
     feature/*:
-      - step: 
+      - step:
           <<: *shellcheck
       - step:
           <<: *tfm_init
     master:
       - step:
           <<: *bump
-          

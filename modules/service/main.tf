@@ -19,22 +19,4 @@ resource "aws_ssm_parameter" "ssm_parameter" {
   type  = "String"
   value = aws_service_discovery_service.main.*.id[count.index]
 }
-# resource "aws_cloudformation_stack" "hierarchy_services" {
-#   count         = length(var.services)
-#   name          = "cloudmap-tfm-${var.client}-${var.platform}-${var.dtap}-${var.services[count.index]}"
-#   template_body = <<-STACK
-#   Resources:
-#     HierachyInstance:
-#       Type: AWS::ServiceDiscovery::Instance
-#       Properties:
-#         InstanceAttributes:
-#           ServiceName: "${var.services[count.index]}"
-#           NamespaceId: "${var.namespace_id}"
-#           ServiceId: "${aws_service_discovery_service.main.*.id[count.index]}"
-#           Client: "${var.client}"
-#           Dtap: "${var.dtap}"
-#           IamRoleUpdates: "${aws_iam_role.main.*.arn[count.index]}"
-#         InstanceId: "${var.client}-${var.platform}-${var.dtap}-${var.services[count.index]}"
-#         ServiceId: "${var.hierarchy_services_service_id}"
-#   STACK
-# }
+

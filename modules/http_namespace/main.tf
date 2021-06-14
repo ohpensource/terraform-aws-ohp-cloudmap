@@ -14,8 +14,9 @@ resource "aws_service_discovery_http_namespace" "main" {
 }
 
 module "services" {
-  source = "../service"
-  count  = length(var.envs)
+  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules/service?ref=v0.1.0"
+
+  count = length(var.envs)
 
   services                      = var.services
   namespace_id                  = aws_service_discovery_http_namespace.main.*.id[count.index]
@@ -30,21 +31,3 @@ module "services" {
   hierarchy_services_service_id = var.hierarchy_services_service_id
 }
 
-# resource "aws_cloudformation_stack" "hierarchy_namespaces" {
-#   count         = length(var.envs)
-#   name          = "cloudmap-tfm-${var.client}-${var.platform}-${var.envs[count.index]}"
-#   template_body = <<-STACK
-#   Resources:
-#     HierachyInstance:
-#       Type: AWS::ServiceDiscovery::Instance
-#       Properties:
-#         InstanceAttributes:
-#           NamespaceName: "${var.client}-${var.platform}-${var.envs[count.index]}"
-#           NamespaceId: "${aws_service_discovery_http_namespace.main.*.id[count.index]}"
-#           Client: "${var.client}"
-#           Dtap: "${var.envs[count.index]}"
-#           Platform: "${var.platform}"
-#         InstanceId: "${var.client}-${var.platform}-${var.envs[count.index]}"
-#         ServiceId: "${var.hierarchy_namespaces_service_id}"
-#   STACK
-# }
