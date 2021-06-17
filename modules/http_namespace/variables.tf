@@ -1,10 +1,19 @@
-variable "envs" { type = list(string) }
-variable "prefix" {}
-variable "platform" {}
-variable "services" { type = list(string) }
-variable "default_tags" { type = map(any) }
-variable "client" {}
-variable "project" {}
-variable "client_map" { type = map(any) }
-variable "hierarchy_namespaces_service_id" {}
-variable "hierarchy_services_service_id" {}
+variable "envs" {
+  type        = list(string)
+  description = "List of environments"
+  default     = ["acc", "tst", "prd"]
+}
+variable "platform" {
+  type        = string
+  description = "One of ns, ofs, cls"
+}
+variable "tags" {
+  type        = map(any)
+  description = "Tags to be applied"
+  default     = {}
+}
+variable "client" {
+  type        = string
+  description = "Client shortname - agn, rbc, tkp, etc"
+  default     = "ohp"
+}

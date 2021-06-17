@@ -1,13 +1,9 @@
 resource "aws_iam_role" "main" {
   count = length(var.account_ids) == 0 ? 0 : length(var.services)
-  name  = "${var.prefix}-${var.project}-svc-${var.platform}-${var.client}-${var.dtap}-${var.services[count.index]}"
-  tags = merge(var.default_tags,
+  name  = "${local.role_prefix}-svc-${var.platform}-${var.client}-${var.dtap}-${var.services[count.index]}"
+  tags = merge(var.tags,
     tomap({
-      "Name"      = "${var.prefix}-${var.project}-svc-${var.client}-${var.dtap}-${var.services[count.index]}",
-      "Workspace" = lower(terraform.workspace),
-      "Platform"  = var.platform,
-      "Client"    = var.client,
-      "Dtap"      = var.dtap
+      "Name" = "${local.role_prefix}-svc-${var.client}-${var.dtap}-${var.services[count.index]}",
   }))
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
 }
@@ -25,7 +21,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 
 resource "aws_iam_role_policy" "main" {
   count  = length(var.account_ids) == 0 ? 0 : length(var.services)
-  name   = "${var.prefix}-${var.project}-service-${var.services[count.index]}"
+  name   = "${var.project}-service-${var.services[count.index]}"
   role   = aws_iam_role.main.*.name[count.index]
   policy = <<EOF
 {

@@ -3,13 +3,9 @@ resource "aws_service_discovery_service" "main" {
   name         = var.services[count.index]
   namespace_id = var.namespace_id
   description  = "${var.services[count.index]} ${var.dtap} ${var.client} ${var.platform}"
-  tags = merge(var.default_tags,
+  tags = merge(var.tags,
     tomap({
-      "Name"      = var.services[count.index],
-      "Workspace" = lower(terraform.workspace),
-      "Platform"  = var.platform,
-      "Client"    = var.client,
-      "Dtap"      = var.dtap
+      "Name" = var.services[count.index],
   }))
 }
 
