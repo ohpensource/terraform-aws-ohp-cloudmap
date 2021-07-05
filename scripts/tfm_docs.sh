@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install Terraform-docs if not installed
-TFM_DOCS_VER="0.13.0"
+TFM_DOCS_VER="0.14.1"
 MOD_DIR="modules"
 
 if ! command -v terraform-docs >/dev/null 2>&1; then

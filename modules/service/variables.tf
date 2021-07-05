@@ -3,41 +3,37 @@ variable "services" {
   description = "List of services. Use descriptive name. No duplicates"
   default     = ["webportal", "api"]
 }
+
 variable "namespace_id" {
   type        = string
   description = "Cloudmap namespace id"
 }
-variable "namespace_arn" {
+
+variable "namespace_name" {
   type        = string
-  description = "Cloudmap namespace arn"
+  description = "Cloudmap namespace name"
 }
+
 variable "tags" {
   type        = map(any)
   description = "Tags to be applied"
   default     = {}
 }
-variable "dtap" {
-  type        = string
-  description = "Environment short name - dev, tst, acc, prd"
-  default     = "dev"
+
+variable "create_service_iam_role" {
+  type        = bool
+  description = "Optional - create IAM role for updating services"
+  default     = false
 }
-variable "project" {
-  type        = string
-  description = "Project name"
-  default     = "cloudmap"
+
+variable "account_ids" {
+  type        = list(string)
+  description = "List of account IDs that should be able to update cloudmap services"
+  default     = []
 }
-variable "prefix" {
+
+variable "namespace_role_name" {
   type        = string
-  description = "(Optional) Prefix for IAM role names"
+  description = "Optional - adds policy a policy to namespace role allowing update/modify of services"
   default     = null
-}
-variable "account_ids" { type = list(string) }
-variable "platform" {
-  type        = string
-  description = "One of ns, ofs, cls"
-}
-variable "client" {
-  type        = string
-  description = "Client shortname - agn, rbc, tkp, etc"
-  default     = "ohp"
 }
