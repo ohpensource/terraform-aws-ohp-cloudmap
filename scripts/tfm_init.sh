@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o pipefail
 chmod +x scripts/*.sh
 WKDIR=$PWD
 
