@@ -10,7 +10,7 @@
 
 ## Description
 
-Creates Cloudmap Services
+Creates Cloudmap Services and optinally a read-write IAM role for updating service instances and attributes.
 
 ## Usage
 

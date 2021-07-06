@@ -27,8 +27,3 @@ variable "create_iam_rw_role" {
   default     = false
 }
 
-# variable "services" {
-#   type        = list(string)
-#   description = "List of Services to add to Namespace"
-#   default     = []
-# }

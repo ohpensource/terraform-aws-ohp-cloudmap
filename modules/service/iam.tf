@@ -22,12 +22,15 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 resource "aws_iam_role_policy" "main" {
   count  = var.create_service_iam_role ? 1 : 0
-  name   = "read-write-policy"
+  name   = "${var.service}-read-write-policy"
   role   = aws_iam_role.main.0.name
   policy = data.aws_iam_policy_document.rw_policy.json
 }
 
 data "aws_iam_policy_document" "rw_policy" {
+  depends_on = [
+    aws_service_discovery_service.main, aws_ssm_parameter.service_id
+  ]
   statement {
     sid = "General"
     actions = [
@@ -46,13 +49,13 @@ data "aws_iam_policy_document" "rw_policy" {
   statement {
     sid       = "Service"
     actions   = ["servicediscovery:*"]
-    resources = aws_service_discovery_service.main.*.arn
+    resources = [aws_service_discovery_service.main.arn]
   }
 
   statement {
     sid       = "Ssm"
     actions   = ["ssm:PutParameter"]
-    resources = aws_ssm_parameter.service_id.*.arn
+    resources = [aws_ssm_parameter.service_id.arn]
   }
 
 }
@@ -61,7 +64,7 @@ data "aws_iam_policy_document" "rw_policy" {
 
 resource "aws_iam_role_policy" "namespace" {
   count  = var.namespace_role_name != null ? 1 : 0
-  name   = "read-write-services-policy"
+  name   = "${var.service}-read-write-policy"
   role   = var.namespace_role_name
   policy = data.aws_iam_policy_document.rw_policy.json
 }

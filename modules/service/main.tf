@@ -1,18 +1,16 @@
 
 resource "aws_service_discovery_service" "main" {
-  count        = length(var.services)
-  name         = var.services[count.index]
+  name         = var.service
   namespace_id = var.namespace_id
-  description  = "${lower(var.namespace_name)} ${lower(var.services[count.index])}"
+  description  = "${lower(var.namespace_name)} ${lower(var.service)}"
   tags = merge(var.tags,
     tomap({
-      "Name" = lower(var.services[count.index]),
+      "Name" = lower(var.service),
   }))
 }
 
 resource "aws_ssm_parameter" "service_id" {
-  count = length(var.services)
-  name  = "/cloudmap/${var.namespace_name}/${var.services[count.index]}/serviceid"
+  name  = "/cloudmap/${var.namespace_name}/${var.service}/serviceid"
   type  = "String"
-  value = aws_service_discovery_service.main.*.id[count.index]
+  value = aws_service_discovery_service.main.id
 }
