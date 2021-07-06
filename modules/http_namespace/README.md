@@ -10,7 +10,7 @@
 
 ## Description
 
-Creates Cloudmap Namespaces
+Creates Cloudmap Namespaces and optionally, an IAM role that enables read-write permissions to trusted accounts/roles to update services and instances within the namespace.
 
 ## Usage
 
