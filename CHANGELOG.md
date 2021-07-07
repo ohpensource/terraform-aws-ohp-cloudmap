@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.3.1
+
+- patch:  add count to namespace iam role
+
 ## 0.3.0
 
 - minor: merge branch 'feature/lanz-1099'
