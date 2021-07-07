@@ -5,10 +5,11 @@ resource "aws_iam_role" "main" {
     tomap({
       "Name" = var.name,
   }))
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy[0].json
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
+  count = var.create_iam_rw_role ? 1 : 0
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -23,11 +24,12 @@ resource "aws_iam_role_policy" "main" {
   count  = var.create_iam_rw_role ? 1 : 0
   name   = "read-write-namespace-policy"
   role   = aws_iam_role.main.0.name
-  policy = data.aws_iam_policy_document.rw_policy.json
+  policy = data.aws_iam_policy_document.rw_policy[0].json
 }
 
 
 data "aws_iam_policy_document" "rw_policy" {
+  count = var.create_iam_rw_role ? 1 : 0
   statement {
     sid = "General"
     actions = [
