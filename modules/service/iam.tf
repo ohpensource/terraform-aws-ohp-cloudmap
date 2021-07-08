@@ -1,33 +1,34 @@
 # Service Role
 resource "aws_iam_role" "main" {
-  count = var.create_service_iam_role ? 1 : 0
-  name  = "${var.namespace_name}-services-role"
-  tags = merge(var.tags,
-    tomap({
-      "Name" = "${var.namespace_name}-services",
-  }))
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+  for_each           = toset(local.create_service_iam_role)
+  name               = "cloudmap-service-${var.namespace_name}-${each.key}"
+  tags               = var.tags
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy[each.key].json
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
+  for_each = toset(local.create_service_iam_role)
   statement {
     actions = ["sts:AssumeRole"]
 
     principals {
       type        = "AWS"
-      identifiers = local.principals
+      identifiers = sort(local.principals)
     }
   }
 }
 
+
 resource "aws_iam_role_policy" "main" {
-  count  = var.create_service_iam_role ? 1 : 0
-  name   = "${var.service}-read-write-policy"
-  role   = aws_iam_role.main.0.name
-  policy = data.aws_iam_policy_document.rw_policy.json
+  for_each = toset(local.create_service_iam_role)
+  name     = "read-write-policy"
+  role     = aws_iam_role.main[each.key].name
+  policy   = data.aws_iam_policy_document.rw_policy[each.key].json
 }
 
 data "aws_iam_policy_document" "rw_policy" {
+  for_each = toset(local.create_service_iam_role)
+
   depends_on = [
     aws_service_discovery_service.main, aws_ssm_parameter.service_id
   ]
@@ -49,13 +50,13 @@ data "aws_iam_policy_document" "rw_policy" {
   statement {
     sid       = "Service"
     actions   = ["servicediscovery:*"]
-    resources = [aws_service_discovery_service.main.arn]
+    resources = [aws_service_discovery_service.main[each.key].arn]
   }
 
   statement {
     sid       = "Ssm"
     actions   = ["ssm:PutParameter"]
-    resources = [aws_ssm_parameter.service_id.arn]
+    resources = [aws_ssm_parameter.service_id[each.key].arn]
   }
 
 }
@@ -63,8 +64,8 @@ data "aws_iam_policy_document" "rw_policy" {
 # Update Namespace role
 
 resource "aws_iam_role_policy" "namespace" {
-  count  = var.namespace_role_name != null ? 1 : 0
-  name   = "${var.service}-read-write-policy"
-  role   = var.namespace_role_name
-  policy = data.aws_iam_policy_document.rw_policy.json
+  for_each = toset(var.namespace_role_name != null ? var.services : [])
+  name     = "${each.key}-read-write-policy"
+  role     = var.namespace_role_name
+  policy   = data.aws_iam_policy_document.rw_policy[each.key].json
 }

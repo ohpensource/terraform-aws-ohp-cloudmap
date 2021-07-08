@@ -1,7 +1,7 @@
 output "arn" {
-  value = aws_service_discovery_service.main.arn
+  value = { for k, v in var.services : v => aws_service_discovery_service.main[v].arn }
 }
 
 output "id" {
-  value = aws_service_discovery_service.main.id
+  value = { for k, v in var.services : v => aws_service_discovery_service.main[v].id }
 }

@@ -1,6 +1,6 @@
 resource "aws_iam_role" "main" {
   count = var.create_iam_rw_role ? 1 : 0
-  name  = "${var.name}-namespace"
+  name  = "cloudmap-namespace-${var.name}"
   tags = merge(var.tags,
     tomap({
       "Name" = var.name,
@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = local.principals
+      identifiers = sort(local.principals)
     }
   }
 }

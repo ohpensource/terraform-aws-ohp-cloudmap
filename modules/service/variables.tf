@@ -1,6 +1,7 @@
-variable "service" {
-  type        = string
-  description = "Service name. Use descriptive name"
+variable "services" {
+  type        = list(any)
+  description = "List of service names. Use descriptive name"
+  default     = []
 }
 
 variable "namespace_id" {
