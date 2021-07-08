@@ -57,10 +57,10 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_namespace_id"></a> [namespace\_id](#input\_namespace\_id) | Cloudmap namespace id | `string` | n/a | yes |
 | <a name="input_namespace_name"></a> [namespace\_name](#input\_namespace\_name) | Cloudmap namespace name | `string` | n/a | yes |
-| <a name="input_service"></a> [service](#input\_service) | Service name. Use descriptive name | `string` | n/a | yes |
 | <a name="input_account_ids"></a> [account\_ids](#input\_account\_ids) | List of account IDs that should be able to update cloudmap services | `list(string)` | `[]` | no |
 | <a name="input_create_service_iam_role"></a> [create\_service\_iam\_role](#input\_create\_service\_iam\_role) | Optional - create IAM role for updating services | `bool` | `false` | no |
 | <a name="input_namespace_role_name"></a> [namespace\_role\_name](#input\_namespace\_role\_name) | Optional - adds policy a policy to namespace role allowing update/modify of services | `string` | `null` | no |
+| <a name="input_services"></a> [services](#input\_services) | List of service names. Use descriptive name | `list(any)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to be applied | `map(any)` | `{}` | no |
 
 ## Outputs
