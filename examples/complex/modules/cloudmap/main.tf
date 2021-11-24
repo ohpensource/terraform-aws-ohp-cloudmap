@@ -1,5 +1,5 @@
 module "namespace" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//http_namespace?ref=v0.4.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//http_namespace?ref=v0.0.1"
 
   for_each           = local.namespace_services[0]
   name               = each.key
@@ -11,7 +11,7 @@ module "namespace" {
 }
 
 module "services" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//service?ref=v0.4.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//service?ref=v0.0.1"
 
   for_each = local.namespace_services[0]
 

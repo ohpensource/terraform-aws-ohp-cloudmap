@@ -1,7 +1,7 @@
 ###########################
 # Read-only IAM role for all namespaces, services, instances from all accounts
 module "iam_ro_role" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//iam_ro_role?ref=v0.4.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//iam_ro_role?ref=v0.0.1"
 
   name        = "cloudmap-ro-role"
   account_ids = local.all_account_ids

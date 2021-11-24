@@ -1,5 +1,5 @@
 module "namespace" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//http_namespace?ref=v0.3.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//http_namespace?ref=v0.0.1"
 
   name               = var.namespace_name
   description        = var.namespace_description
@@ -10,7 +10,7 @@ module "namespace" {
 }
 
 module "iam_ro_role" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//iam_ro_role?ref=v0.3.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//iam_ro_role?ref=v0.0.1"
 
   name        = "cloudmap-ro-role"
   account_ids = var.account_ids
@@ -18,7 +18,7 @@ module "iam_ro_role" {
 }
 
 module "funds_service" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//service?ref=v0.3.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//service?ref=v0.0.1"
 
   namespace_id            = module.namespace.id
   namespace_name          = var.namespace_name
@@ -30,7 +30,7 @@ module "funds_service" {
 }
 
 module "instance_funds" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//instance?ref=v0.3.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//instance?ref=v0.0.1"
 
   name       = var.instance_name
   service_id = module.funds_service.id

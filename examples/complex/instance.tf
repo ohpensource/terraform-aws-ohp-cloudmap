@@ -1,7 +1,7 @@
 ###########################
 # Example instance
 module "ohp_instance_bulk" {
-  source = "git@bitbucket.org:ohpen-dev/terraform-aws-ohp-cloudmap.git//modules//instance?ref=v0.4.0"
+  source = "github.com/ohpensource/terraform-aws-ohp-cloudmap//modules//instance?ref=v0.0.1"
 
   name       = var.instance_name
   service_id = data.aws_ssm_parameter.bulk.value
