@@ -20,5 +20,5 @@ See examples folder
 
 [confluence](https://ohpendev.atlassian.net/wiki/spaces/CCE/pages/2062320795/Terraform+Modules)
 
-<!-- BEGIN_TF_DOCS -->
-<!-- END_TF_DOCS -->
+<!--- BEGIN_TF_DOCS --->
+<!--- END_TF_DOCS --->
