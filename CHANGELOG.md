@@ -1,3 +1,9 @@
+# :confetti_ball: 0.4.2 (2022-03-14T07:20:08.776Z)
+- - -
+## :newspaper: Others
+* Merge branch 'main' of github.com:ohpensource/terraform-aws-ohp-cloudmap
+- - -
+- - -
 # :confetti_ball: 0.4.1 (2022-03-14T07:19:15.671Z)
 - - -
 ## :newspaper: Others
